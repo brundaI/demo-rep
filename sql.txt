@@ -1,0 +1,79 @@
+create table product(
+product_id int not null,
+product_type varchar(45) not null
+price int not null,
+primary key (product_id)
+);
+
+create table Customers(
+CustomerID int not null auto_increment,
+CustomerName varchar(45) not null,
+Mobile bigint default null,
+Location varchar(45) not null,
+primary key (CustomerID)
+unique key (Mobile)
+);
+
+create table Rep(
+RepID int not null,
+Name varchar(45) not null,
+Mobile bigint default null,
+Location varchar(45) not null,
+primary key(RepID)
+);
+
+create table Orders(
+OrderID int not null auto_increment,
+CustomerID int not null,
+ProductID int not null,
+Quantity int not null,
+OrderDate varchar(10) not null,
+OrderTime varchar(10) not null,
+OrderID int not null,
+RepID int not null,
+foreign key (RepID) references order (RepID) 
+primary key (OrderID)
+foreign key (CustomerID) references customer (CustomerID)
+foreign key (ProductID) references product (ProductID)
+);
+
+
+1.select rep_id,name,location from rep
+
+ 
+2.
+select Customers.CustomerID,Customers.CustomerName,Orders.OrderID,Orders.OrderDate,Orders.RepID
+from Customers,Orders
+where Customers.CustomerID = Orders.CustomerID
+and Customers.CustomerID=5
+
+
+
+   
+4.
+
+select Orders.OrderID,Orders.OrderDate,Rep.RepID
+from Orders,Rep
+where Orders.RepID = Rep.RepID
+order by Rep.RepID
+
+ 
+
+5. 
+
+6. 
+
+select Customers.CustomerID,Customers.CustomerName,count(Customers.CustomerID) as total_orders
+from Customers,Orders
+where Customers.CustomerID = Orders.CustomerID
+group by Customers.CustomerID
+having count(Customers.CustomerID)>=1
+order by total_orders desc
+
+8.
+select Customers.CustomerID,Customers.CustomerName,count(Customers.CustomerID) as total_orders
+from Customers,Orders
+where Customers.CustomerID = Orders.CustomerID
+group by Customers.CustomerID
+having count(Customers.CustomerID)>=1
+order by total_orders desc limit 1
